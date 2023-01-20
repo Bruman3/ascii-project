@@ -9,6 +9,7 @@ import turtle
 #setting up turtle window, pen, etc
 twindow = turtle.Screen()
 twindow.bgcolor("black")
+#You can edit window size
 twindow.setup(700,700)
 bb = turtle.Turtle()
 pen = bb.getpen()
@@ -23,8 +24,12 @@ turtle.tracer(0)
 def to_ascii(image):
     # create an empty string to store the ASCII art
     ascii_art = ""
+    
+    #change dsize to change to quality of the output, makes the input smaller so less assci char are used
+    #scale up/down numbers for dsize            [desize(width, height)]
+    image = cv2.resize(image, dsize=(230, 60))
+    
     # Get the dimensions of the image
-    image = cv2.resize(image, dsize=(180, 60))
     height, width = image.shape[:2]
 
     # Iterate over each pixel in the image
@@ -47,9 +52,10 @@ FONT = ('Arial', FONTSIZE, 'normal')
 
 # Get the next frame from the camera
 while True:
-    #change region location
+    #change region location to change area on screen and size
     img = pyautogui.screenshot( region=(231,188,907,673))
     frame = np.array(img)
+    #calls funtion
     ascii_art = to_ascii(frame)
     #prints a text with turtle pen on a turtle window
     pen.write(ascii_art, font = FONT)
